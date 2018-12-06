@@ -17,19 +17,19 @@ else:
     raise FileNotFoundError('Parametars file not found at following location "' + model_parametars_file +'"')
 
 base_model_name = 'test_model'
-canDrawGraphs = False
+has_csv_file = False
 
 for file in os.listdir(iterate__data_dir):
     if file.endswith('.csv'):
+       has_csv_file = True
        try:
            graph_files = graph.try_get_graph_files(parametars, base_model_name, iterate__data_dir)
            break
        except FileNotFoundError:
            graph_files = []
            break
-    else:
-        graph_files = []
-        break
+if not has_csv_file:
+    graph_files = []
 
 if len(graph_files) == 0:
     for par in parametars['training_properties']:
