@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>db2a2012-f2a0-49f1-be5d-dea582714019</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>iterate.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="graph.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="iterate.py" />
     <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
@@ -43,6 +47,7 @@
     <Content Include="embeddingData\X_char.npy" />
     <Content Include="embeddingData\X_word.npy" />
     <Content Include="embeddingData\y.npy" />
+    <Content Include="iterationData\modelParametars.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
