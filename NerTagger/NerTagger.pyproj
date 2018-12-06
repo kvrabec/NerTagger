@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>db2a2012-f2a0-49f1-be5d-dea582714019</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>NerTagger.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>NerTagger</Name>
     <RootNamespace>NerTagger</RootNamespace>
+    <InterpreterId>Global|PythonCore|3.5</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,20 +22,27 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="data.py" />
-    <Compile Include="NerTagger.py" />
-    <Compile Include="nerTest1.py" />
-    <Compile Include="prepareDataset.py" />
+    <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="prepareEmbeddings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="model.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="classificationData\" />
+    <InterpreterReference Include="Global|PythonCore|3.5" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="classificationData\dataset.json" />
-    <Content Include="classificationData\FmDataset.csv" />
-    <Content Include="classificationData\taggedArticles.tag" />
-    <Content Include="classificationData\tags.tag" />
-    <Content Include="classificationData\WikipediaDataset.json" />
+    <Folder Include="embeddingData\" />
+    <Folder Include="iterationData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="embeddingData\ner_dataset.csv" />
+    <Content Include="embeddingData\testFile.json" />
+    <Content Include="embeddingData\X_char.npy" />
+    <Content Include="embeddingData\X_word.npy" />
+    <Content Include="embeddingData\y.npy" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
