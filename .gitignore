@@ -259,3 +259,9 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/NerTagger/not used
+/NerTagger/model1.h5
+/NerTagger/embeddingData/testFile.json
+/NerTagger/embeddingData/X_char.npy
+/NerTagger/embeddingData/X_word.npy
+/NerTagger/embeddingData/y.npy
