@@ -1,0 +1,10 @@
+{
+  "DateTime": ["2003", "March 2010", "1997", "6th June 2018", "December"],
+  "Person": ["Mirko Cro Cop", "Luka Bulic", "Mar Mar", "Ivica Pepelko", "Ivica Kostelic"],
+  "Organization": ["F.B.I", "Dinamo Zagreb", "Hajdug", "Dukat", "Komunalno"],
+  "GeographicalEntity": ["Turopolje", "Argentina", "Greece", "Slovenia", "Italy"],
+  "GeopoliticalEntity": [ "Israeli", "Palestinians", "London", "English", "European" ],
+  "Artifact": [ "Saltillo", "Pentastar V-6", "Vioxx", "The Simple Life", "Good Morning America" ],
+  "Event": [ "2012 Summer Olympics", "Operation Medusa", "Gulf War", "Australian Open", "World War II" ],
+  "NaturalPhenomenon": [ "SARS", "HIV", "AIDS", "Hurricane Katrina", "H5N2" ]
+}

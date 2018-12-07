@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>db2a2012-f2a0-49f1-be5d-dea582714019</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>iterate.py</StartupFile>
+    <StartupFile>downloadFromWiki.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="downloadFromWiki.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="graph.py">
       <SubType>Code</SubType>
     </Compile>

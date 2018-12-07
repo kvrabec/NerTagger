@@ -5,6 +5,26 @@ import json
 from nltk.tokenize import word_tokenize, sent_tokenize
 import os
 
+class SentenceGetter(object):
+    
+        def __init__(self, data):
+            self.n_sent = 1
+            self.data = data
+            self.empty = False
+            agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
+                                                                s["POS"].values.tolist(),
+                                                                s["Tag"].values.tolist())]
+            self.grouped = self.data.groupby("Sentence #").apply(agg_func)
+            self.sentences = [s for s in self.grouped]
+    
+        def get_next(self):
+            try:
+                s = self.grouped["Sentence: {}".format(self.n_sent)]
+                self.n_sent += 1
+                return s
+            except:
+                return None
+
 embedding_folder = os.path.dirname(os.path.abspath(__file__)) + '\\embeddingData\\'
 X_word_file = embedding_folder + "X_word"
 X_char_file = embedding_folder +"X_char"
@@ -82,26 +102,6 @@ else:
     n_words = len(words); n_words
     tags = get_unique(data["Tag"].values)
     n_tags = len(tags); n_tags
-
-    class SentenceGetter(object):
-    
-        def __init__(self, data):
-            self.n_sent = 1
-            self.data = data
-            self.empty = False
-            agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
-                                                                s["POS"].values.tolist(),
-                                                                s["Tag"].values.tolist())]
-            self.grouped = self.data.groupby("Sentence #").apply(agg_func)
-            self.sentences = [s for s in self.grouped]
-    
-        def get_next(self):
-            try:
-                s = self.grouped["Sentence: {}".format(self.n_sent)]
-                self.n_sent += 1
-                return s
-            except:
-                return None
 
     getter = SentenceGetter(data)
 

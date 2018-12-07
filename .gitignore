@@ -313,5 +313,6 @@ __pycache__/
 /NerTagger/embeddingData_a/X_char.npy
 /NerTagger/embeddingData_a/testFile.json
 /NerTagger/embeddingData_a
-/NerTagger/model1.h52
+/NerTagger/model1.h5
 /NerTagger/model1.csv
+/NerTagger/stanford-corenlp-full-2018-10-05
