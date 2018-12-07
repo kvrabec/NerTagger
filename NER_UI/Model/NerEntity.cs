@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace NER_UI
+namespace NER_UI.Model
 {
     public class NerEntity
     {

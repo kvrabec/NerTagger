@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from keras import optimizers
 from keras.models import Model, Input, load_model
 from keras.layers import (LSTM, Embedding, Dense, TimeDistributed, Dropout, Conv1D,
                           Bidirectional, concatenate, SpatialDropout1D, GlobalMaxPooling1D)
@@ -15,9 +16,10 @@ MAIN_RET_SEQ = True
 MAIN_UNITS = 50
 SPATIAL_DROPOUT = 0.3
 
-BATCH_SIZE = 32
-EPOCH_COUNT = 10
-OPTIMIZER = "adam"
+BATCH_SIZE = 16
+EPOCH_COUNT = 20
+LEARNING_RATE = 0.001
+OPTIMIZER = optimizers.Adam(LEARNING_RATE)
 LOSS = "sparse_categorical_crossentropy"
 METRICS = ["acc"]
 
@@ -33,7 +35,7 @@ def train(X_word_tr, y_tr, X_char_tr, n_words, n_tags, n_chars, max_len, max_len
                                 input_length=max_len_char, mask_zero=True))(char_in)
     # character LSTM to get word encodings by characters
     char_enc = TimeDistributed(LSTM(units=CHAR_UNITS, return_sequences=CHAR_RET_SEQ,
-                                    recurrent_dropout=EMBEDDING_CHAR_DROPOUT))(emb_char)
+                                    recurrent_dropout=CHAR_DROPOUT))(emb_char)
 
     x = concatenate([emb_word, char_enc])
     x = SpatialDropout1D(SPATIAL_DROPOUT)(x)
@@ -44,7 +46,6 @@ def train(X_word_tr, y_tr, X_char_tr, n_words, n_tags, n_chars, max_len, max_len
     model = Model([word_in, char_in], out)
 
     model.compile(optimizer=OPTIMIZER, loss=LOSS, metrics=METRICS)
-    model.summary()
     history = model.fit([X_word_tr,
                         np.array(X_char_tr).reshape((len(X_char_tr), max_len, max_len_char))],
                         np.array(y_tr).reshape(len(y_tr), max_len, 1),
@@ -76,3 +77,15 @@ def predict(X_word_te, X_char_te, y_te, max_len, max_len_char, idx2word, idx2tag
             for word, t in zip(X_word_te[i], p):
                 if word != 0:
                     print(idx2word[word] + ' ' + idx2tag[t])
+
+def set_parametars(learning_rate, char_dropout, spatial_dropout, main_dropout):
+    global CHAR_DROPOUT
+    global MAIN_DROPOUT
+    global SPATIAL_DROPOUT
+    global LEARNING_RATE
+    
+    CHAR_DROPOUT = char_dropout
+    MAIN_DROPOUT = main_dropout
+    SPATIAL_DROPOUT = spatial_dropout
+    LEARNING_RATE = learning_rate
+    
