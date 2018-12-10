@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>db2a2012-f2a0-49f1-be5d-dea582714019</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>downloadFromWiki.py</StartupFile>
+    <StartupFile>iterate.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

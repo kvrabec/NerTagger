@@ -39,7 +39,7 @@ def draw_graphs(graph_files):
             validation_accuracy.name = file['name'] + '_val_acc'
             plt.plot(accuracy)
             plt.plot(validation_accuracy)
-        plt.legend(loc=4)
+        plt.legend(loc=8)
         plt.title(graph['name'])
         plt.show()
 

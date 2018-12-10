@@ -37,10 +37,10 @@
             this.nextButton = new System.Windows.Forms.Button();
             this.answerButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.questionLabel = new System.Windows.Forms.Label();
             this.answerRb3 = new System.Windows.Forms.RadioButton();
             this.answerRb2 = new System.Windows.Forms.RadioButton();
             this.answerRb1 = new System.Windows.Forms.RadioButton();
+            this.questionTextBox = new System.Windows.Forms.TextBox();
             this.questionPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,10 +93,10 @@
             // 
             // questionPanel
             // 
+            this.questionPanel.Controls.Add(this.questionTextBox);
             this.questionPanel.Controls.Add(this.nextButton);
             this.questionPanel.Controls.Add(this.answerButton);
             this.questionPanel.Controls.Add(this.label2);
-            this.questionPanel.Controls.Add(this.questionLabel);
             this.questionPanel.Controls.Add(this.answerRb3);
             this.questionPanel.Controls.Add(this.answerRb2);
             this.questionPanel.Controls.Add(this.answerRb1);
@@ -135,19 +135,10 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Question";
             // 
-            // questionLabel
-            // 
-            this.questionLabel.AutoSize = true;
-            this.questionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.questionLabel.Location = new System.Drawing.Point(66, 14);
-            this.questionLabel.Name = "questionLabel";
-            this.questionLabel.Size = new System.Drawing.Size(0, 20);
-            this.questionLabel.TabIndex = 3;
-            // 
             // answerRb3
             // 
             this.answerRb3.AutoSize = true;
-            this.answerRb3.Location = new System.Drawing.Point(52, 105);
+            this.answerRb3.Location = new System.Drawing.Point(72, 110);
             this.answerRb3.Name = "answerRb3";
             this.answerRb3.Size = new System.Drawing.Size(14, 13);
             this.answerRb3.TabIndex = 2;
@@ -157,7 +148,7 @@
             // answerRb2
             // 
             this.answerRb2.AutoSize = true;
-            this.answerRb2.Location = new System.Drawing.Point(52, 85);
+            this.answerRb2.Location = new System.Drawing.Point(72, 91);
             this.answerRb2.Name = "answerRb2";
             this.answerRb2.Size = new System.Drawing.Size(14, 13);
             this.answerRb2.TabIndex = 1;
@@ -167,12 +158,24 @@
             // answerRb1
             // 
             this.answerRb1.AutoSize = true;
-            this.answerRb1.Location = new System.Drawing.Point(52, 66);
+            this.answerRb1.Location = new System.Drawing.Point(72, 72);
             this.answerRb1.Name = "answerRb1";
             this.answerRb1.Size = new System.Drawing.Size(14, 13);
             this.answerRb1.TabIndex = 0;
             this.answerRb1.TabStop = true;
             this.answerRb1.UseVisualStyleBackColor = true;
+            // 
+            // questionTextBox
+            // 
+            this.questionTextBox.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.questionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.questionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.questionTextBox.Location = new System.Drawing.Point(72, 3);
+            this.questionTextBox.Multiline = true;
+            this.questionTextBox.Name = "questionTextBox";
+            this.questionTextBox.ReadOnly = true;
+            this.questionTextBox.Size = new System.Drawing.Size(573, 57);
+            this.questionTextBox.TabIndex = 14;
             // 
             // NerTaggerForm
             // 
@@ -203,13 +206,13 @@
         private System.Windows.Forms.RichTextBox richTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel questionPanel;
-        private System.Windows.Forms.Label questionLabel;
         private System.Windows.Forms.RadioButton answerRb3;
         private System.Windows.Forms.RadioButton answerRb2;
         private System.Windows.Forms.RadioButton answerRb1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button answerButton;
+        private System.Windows.Forms.TextBox questionTextBox;
     }
 }
 

@@ -149,12 +149,14 @@ namespace NER_UI
                 return;
             _questions = new List<Question>();
 
-            if (!questionPanel.Visible && _namedEntities.Any())
+            if (!_namedEntities.Any())
+                return;
+
+            if (!questionPanel.Visible)
                 questionPanel.Visible = true;
 
-            var random =new Random();
             var text = "";
-            var entity = _namedEntities[random.Next(_namedEntities.Count)];
+
             foreach (var line in _text.Split('\n'))
             {
                 var split = line.Split(' ');
@@ -165,25 +167,28 @@ namespace NER_UI
 
             var sentences = Regex.Split(text, @"(?<=[\.!\?])\s+");
 
-            foreach (var sentence in sentences)
-            {
-                if (!sentence.Contains(entity.Text))
-                    continue;
+            foreach (var entity in _namedEntities)
+                foreach (var sentence in sentences)
+                {
+                    if (!sentence.Contains(entity.Text))
+                        continue;
 
-                var question = sentence.Replace(entity.Text, "__________");
-                var answers = GenerateAnswers(entity);
-                _questions.Add(new Question(question, answers));
+                    var question = sentence.Replace(entity.Text, "__________");
+                    var answers = GenerateAnswers(entity);
+                    answers.Shuffle();
+                    _questions.Add(new Question(question, answers));
+                }
+           
 
-            }
-
+            ShowQuestion(_questions.First(q => !q.isAnswered));
         }
 
-        private HashSet<Answer> GenerateAnswers(NerEntity entity)
+        private List<Answer> GenerateAnswers(NerEntity entity)
         {
-            var answers = new HashSet<Answer> {new Answer(entity.Text, true)};
+            var answers = new List<Answer> {new Answer(entity.Text, true)};
             var random = new Random();
-            var filepath = "data/data.json";
-            using (var r = new StreamReader(filepath))
+            var filepath = "NER_UI/data/data.json";
+            using (var r = new StreamReader(Path.Combine(_exeLocation, @"..\..\..\..\", filepath)))
             {
                 var json = r.ReadToEnd();
                 var jobj = JObject.Parse(json);
@@ -206,15 +211,24 @@ namespace NER_UI
             if (_questions.Count <= 1 || _questions.All(q => q.isAnswered))
             {
                 MessageBox.Show(@"No more questions!");
+                questionPanel.Visible = false;
                 return;
             }
-                
-            _currentQuestion = _questions.First(q => !q.isAnswered);
-            questionLabel.Text = _currentQuestion.QuestionText;
-            var answers = _currentQuestion.Answers.ToList();
+
+            ShowQuestion(_questions.First(q => !q.isAnswered));
+        }
+
+        private void ShowQuestion(Question q)
+        {
+            _currentQuestion = q;
+            questionTextBox.Text = _currentQuestion.QuestionText;
+            var answers = q.Answers.ToList();
             answerRb1.Text = answers.First().Text;
+            answerRb1.Checked = false;
             answerRb2.Text = answers[1].Text;
+            answerRb2.Checked = false;
             answerRb3.Text = answers.Last().Text;
+            answerRb3.Checked = false;
         }
 
         private void answerButton_Click(object sender, EventArgs e)
@@ -236,12 +250,30 @@ namespace NER_UI
                 MessageBox.Show($@"You answered wrong! Correct answer is {correntAnswer.Text}");
             }
                 
-
+            NextButton_Click(sender, e);
         }
 
         private bool CheckAnswer(string answer)
         {
             return _currentQuestion.Answers.First(ans => ans.Text == answer).IsCorrect;
+        }
+    }
+
+    public static class Extension
+    {
+        private static readonly Random Rng = new Random();
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = Rng.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

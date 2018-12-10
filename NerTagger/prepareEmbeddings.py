@@ -5,25 +5,7 @@ import json
 from nltk.tokenize import word_tokenize, sent_tokenize
 import os
 
-class SentenceGetter(object):
-    
-        def __init__(self, data):
-            self.n_sent = 1
-            self.data = data
-            self.empty = False
-            agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
-                                                                s["POS"].values.tolist(),
-                                                                s["Tag"].values.tolist())]
-            self.grouped = self.data.groupby("Sentence #").apply(agg_func)
-            self.sentences = [s for s in self.grouped]
-    
-        def get_next(self):
-            try:
-                s = self.grouped["Sentence: {}".format(self.n_sent)]
-                self.n_sent += 1
-                return s
-            except:
-                return None
+
 
 embedding_folder = os.path.dirname(os.path.abspath(__file__)) + '\\embeddingData\\'
 X_word_file = embedding_folder + "X_word"
@@ -46,10 +28,10 @@ char2idx = {}
 max_len = 75
 max_len_char = 10
 
-def get_unique(seq):
+def get_unique(list):
     seen = set()
     seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
+    return [x for x in list if not (x in seen or seen_add(x))]
 
 def prepare_text_for_prediction(text):
     sentences = sent_tokenize(text)
@@ -99,13 +81,14 @@ else:
     data = data.fillna(method="ffill")
 
     words = get_unique(data["Word"].values)
-    n_words = len(words); n_words
+    n_words = len(words)
     tags = get_unique(data["Tag"].values)
-    n_tags = len(tags); n_tags
+    n_tags = len(tags)
 
-    getter = SentenceGetter(data)
-
-    sentences = getter.sentences
+    agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
+                                                                s["POS"].values.tolist(),
+                                                                s["Tag"].values.tolist())]
+    sentences = data.groupby("Sentence #").apply(agg_func)
 
     word2idx = {w: i + 2 for i, w in enumerate(words)}
     word2idx["UNK"] = 1
@@ -114,15 +97,14 @@ else:
     tag2idx = {t: i + 1 for i, t in enumerate(tags)}
     tag2idx["PAD"] = 0
     idx2tag = {i: w for w, i in tag2idx.items()}
-
-    X_word = [[word2idx[w[0]] for w in s] for s in sentences]
-    X_word = pad_sequences(maxlen=max_len, sequences=X_word, value=word2idx["PAD"], padding='post', truncating='post')
-    chars = get_unique([w_i for w in words for w_i in w])
-    n_chars = len(chars)
-
     char2idx = {c: i + 2 for i, c in enumerate(chars)}
     char2idx["UNK"] = 1
     char2idx["PAD"] = 0
+    chars = get_unique([w_i for w in words for w_i in w])
+    n_chars = len(chars)
+
+    X_word = [[word2idx[w[0]] for w in s] for s in sentences]
+    X_word = pad_sequences(maxlen=max_len, sequences=X_word, value=word2idx["PAD"], padding='post', truncating='post')
 
     for sentence in sentences:
         sent_seq = []
