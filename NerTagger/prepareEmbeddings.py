@@ -84,6 +84,8 @@ else:
     n_words = len(words)
     tags = get_unique(data["Tag"].values)
     n_tags = len(tags)
+    chars = get_unique([w_i for w in words for w_i in w])
+    n_chars = len(chars)
 
     agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
                                                                 s["POS"].values.tolist(),
@@ -100,8 +102,6 @@ else:
     char2idx = {c: i + 2 for i, c in enumerate(chars)}
     char2idx["UNK"] = 1
     char2idx["PAD"] = 0
-    chars = get_unique([w_i for w in words for w_i in w])
-    n_chars = len(chars)
 
     X_word = [[word2idx[w[0]] for w in s] for s in sentences]
     X_word = pad_sequences(maxlen=max_len, sequences=X_word, value=word2idx["PAD"], padding='post', truncating='post')

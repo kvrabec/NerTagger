@@ -137,7 +137,7 @@ namespace NER_UI
             }
         }
 
-        private void textBox_TextChanged(object sender, EventArgs e)
+        private void TextBox_TextChanged(object sender, EventArgs e)
         {
             if (textBox.Text == "")
                 questionPanel.Visible = false;
@@ -148,9 +148,6 @@ namespace NER_UI
             if (!_namedEntities.Any())
                 return;
             _questions = new List<Question>();
-
-            if (!_namedEntities.Any())
-                return;
 
             if (!questionPanel.Visible)
                 questionPanel.Visible = true;
@@ -180,7 +177,7 @@ namespace NER_UI
                 }
            
 
-            ShowQuestion(_questions.First(q => !q.isAnswered));
+            ShowQuestion(_questions.First(q => !q.IsAnswered));
         }
 
         private List<Answer> GenerateAnswers(NerEntity entity)
@@ -207,15 +204,17 @@ namespace NER_UI
 
         private void NextButton_Click(object sender, EventArgs e)
         {
-            _currentQuestion = null;
-            if (_questions.Count <= 1 || _questions.All(q => q.isAnswered))
+            if (_questions.Count <= 1 || _questions.All(q => q.IsAnswered))
             {
                 MessageBox.Show(@"No more questions!");
                 questionPanel.Visible = false;
                 return;
             }
 
-            ShowQuestion(_questions.First(q => !q.isAnswered));
+            if (_questions.Count == 1)
+                return;
+            _questions.Shuffle();
+            ShowQuestion(_questions.Where(question => question != _currentQuestion).First(q => !q.IsAnswered));
         }
 
         private void ShowQuestion(Question q)
@@ -233,6 +232,11 @@ namespace NER_UI
 
         private void answerButton_Click(object sender, EventArgs e)
         {
+            if (!answerRb1.Checked && !answerRb2.Checked && !answerRb3.Checked)
+            {
+                MessageBox.Show(@"Answer not selected!!!");
+                return;
+            }
             if(_currentQuestion == null)
             {
                 MessageBox.Show(@"You're cheating!!!");
@@ -241,7 +245,7 @@ namespace NER_UI
             var iscorrect = answerRb1.Checked ? CheckAnswer(answerRb1.Text) :
                 answerRb2.Checked ? CheckAnswer(answerRb2.Text) :
                 CheckAnswer(answerRb3.Text);
-            _currentQuestion.isAnswered = true;
+            _currentQuestion.IsAnswered = true;
             if (iscorrect)
                 MessageBox.Show(@"You answered correctly.");
             else

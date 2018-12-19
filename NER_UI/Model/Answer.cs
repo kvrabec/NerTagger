@@ -7,7 +7,7 @@
             Text = text;
             IsCorrect = isCorrect;
         }
-        public string Text { get; set; }
-        public bool IsCorrect { get; set; }
+        public string Text { get; }
+        public bool IsCorrect { get; }
     }
 }

@@ -7,7 +7,7 @@ namespace NER_UI
     public partial class LoadingForm : Form
     {
 
-        public Action Worker { get; set; }
+        public Action Worker { get; }
         public LoadingForm(Action worker)
         {
             InitializeComponent();

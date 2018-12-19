@@ -8,10 +8,10 @@ namespace NER_UI.Model
         {
             QuestionText = question;
             Answers = answers;
-            isAnswered = false;
+            IsAnswered = false;
         }
         public string QuestionText { get; }
         public List<Answer> Answers { get;}
-        public bool isAnswered { get; set; }
+        public bool IsAnswered { get; set; }
     }
 }
